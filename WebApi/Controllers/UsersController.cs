@@ -27,6 +27,15 @@ namespace WebApi.Controllers
         [HttpGet]
         public User GetUserByLogin(string login) => _context.Users.Where(user => user.Login == login).First();
 
+        [HttpPost]
+        public User CreateNeUser(User user)
+        {
+            int result = 0;
+            _context.Users.Add(new User() { Login=user.Login,Password = user.Password});
+            result = _context.SaveChanges();
+
+            return (result<1)?null:new User();
+        }
         
     }
 }
